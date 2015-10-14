@@ -1,34 +1,52 @@
-    String.prototype.format = function() { a = this; for ( k in arguments ) { a = a.replace("{" + k + "}", arguments[k]); } return a; };
-    window.demo = { 
-        'version': '3.0-rc1',
-        'ga': '',
-        'primaryUrl': 'http://code.google.com/p/jquery-ui-map/',
-        'url': 'http://jquery-ui-map.googlecode.com/', 
-        'forum': 'http://groups.google.com/group/jquery-ui-map-discuss/feed/rss_v2_0_msgs.xml', 
-        'subscribe': 'http://groups.google.com/group/jquery-ui-map-discuss/boxsubscribe', 
-        'exception': 'Unable to load due to either poor internet connection or some CDN\'s aren\'t as responsive as we would like them to be. Try refreshing the page :D.', 
-        'init': function() {
-            //window._gaq = [['_setAccount', this.ga], ['_trackPageview'], ['_trackPageLoadTime']];
-            //Modernizr.load({ 'test': ( location.href.indexOf(this.url) > -1 ), 'yep': 'http://www.google-analytics.com/ga.js' });
-            this.test('Backbone', function() {
-                $('#forum').append('<h2>Forum</h2><ul id="forum_posts"></ul><h2>Subscribe</h2><form id="forum_subscribe" class="subscribe" action="#"><label for="email">E-mail:</label><input id="email" type="text" name="email" /><input type="submit" name="sub" value="Subscribe" /></form>');
-                ForumCollection = Backbone.Collection.extend({ 'url': 'http://ajax.googleapis.com/ajax/services/feed/load?v=1.0&callback=?&q={0}'.format(encodeURIComponent(demo.forum)), 'parse': function(response) { return response.responseData.feed.entries; } });
-                ForumPost = Backbone.View.extend({ 'tagName': 'li', 'className': 'group-item', 'template': _.template('<a href="<%=link%>"><%=title%></a></h3>'), 'render': function() { $(this.el).html(this.template(this.model.toJSON())); return this; } }); 
-                Forum = Backbone.View.extend({ 'el': $("#forum"), 'initialize': function() { this.col = new ForumCollection(); this.col.bind('reset', this.load, this); this.col.fetch(); }, 'add': function(post) { var view = new ForumPost({'model': post}); $('#forum_posts').append(view.render().el); }, 'load': function () { this.col.each(this.add); $('#forum_subscribe').attr('action', demo.subscribe); $(this.el).show(); } });
-                var app = new Forum();
-            });
-            this.test('prettyPrint', function() { prettyPrint(); });
-            $('#version').text(this.version);
-        },
-        'redirect': function(url) { alert('This page is deprecated. Please update your URL. Redirecting to new page.'); window.location = url; },
-        'col': [], 
-        'tests': [],
-        'test': function(a, b) { if ( window[a] ) { b(); } },
-        'add': function(a, b) { if (b) { this.col[a] = b; } else { this.col.push(a); } return this; },
-        'load': function(a) { var self = this; if (a) { self.col[a](); } else { $.each(self.col, function(i,d) { try { d(); } catch (err) { alert(self.exception); } }); } },
-        'timeStart': function(key, desc) { this.tests[key] = { 'start': new Date().getTime(), 'desc': desc }; },
-        'timeEnd': function(key) { this.tests[key].elapsed = new Date().getTime(); },
-        'report': function(id) { var i = 1; for ( var k in this.tests ) { var t = this.tests[k]; $(id).append('<div class="benchmark rounded"><div class="benchmark-result lt">' + (t.elapsed - t.start) + ' ms</div><div class="lt"><p class="benchmark-iteration">Benchmark case ' + i + '</p><p class="benchmark-title">' + t.desc + '</p></div></div>'); i++; }; }
-    };
-        
-    demo.init();
+$( document ).on( "pagecreate", "#map-page", function() {
+    var $mapSwitch = $( "#map-switch" ),
+        $listSwitch = $( "#list-switch" ),
+        $map = $( "#map-canvas" ),
+        $list = $( "#list-canvas" );
+    $mapSwitch.on( "click", function( e ){
+        $map.show();
+        $map.gmap();
+        $list.hide();
+    });
+    $listSwitch.on( "click", function( e ){
+        $list.show();
+        $map.hide();
+    });
+    $( "#show-more a" ).on( "click", function( e ){
+        // Assume we already have a cached geolocation because it's not necessary for this example.
+        var location = location || {};
+            location.coords = location.coords || {};
+            location.coords.latitude = location.coords.latitude || {};
+            location.coords.longitude = location.coords.longitude || {};
+        JQM.geo.startIndex = $( "#list-results li" ).size() -1; // exclude show more list item
+        JQM.geo.showMore( location );
+        e.preventDefault();
+    });
+});
+/**
+ * Geolocation configuration
+ */
+var JQM = JQM || {};
+JQM.geo = {
+    location: "",
+    zip: "",
+    startIndex: "",
+    showMore: function(latlng) {
+        $.mobile.loading( "show" );
+        JQM.geo.location = latlng;
+        $.ajax({
+            url: "showMore.html?lat="+JQM.geo.location.coords.latitude+"&lon="+JQM.geo.location.coords.longitude+"&zip="+JQM.geo.zip+"&startIndex="+JQM.geo.startIndex,
+            success: function( response ) {
+                var $listResults = $( "#list-results" );
+                $listResults.find( "#show-more" ).before(response);
+                $listResults.listview( "refresh" );
+                $.mobile.loading( 'hide' );
+            },
+            timeout: 6000,  // Timeout after 6 seconds
+            error: function(jqXHR, textStatus, errorThrown) {
+                console.log("Error, textStatus: " + textStatus + " errorThrown: "+ errorThrown);
+                $.mobile.loading( "hide" );
+            }
+        });
+    }
+};
