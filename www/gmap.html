@@ -20,14 +20,16 @@
     <body>
         
 
-        <div data-role="page" id="main">
+        <div data-role="page" id="index">
             <div data-theme="a" data-role="header">
                  <h3>
                 First Page
             </h3>
 
             </div>
-            <p><a href="#" class="btn-back">Map</a></p>
+            <div data-role="content" id="content">
+                <div id="map_canvas" style="height:350px; width:350px;border:1px solid #ff0000; background-color:#ffff00"></div>
+            </div>
             <div data-theme="a" data-role="footer" data-position="fixed">
                  <h3>
                 First Page

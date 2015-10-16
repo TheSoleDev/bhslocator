@@ -11,3 +11,7 @@ $(document).on('pageshow', '#index', function (e, data) {
         });
     }, 1);
 });
+
+    $('#main').on('click','.btn-back',function(e) { 
+      document.location.href="gmap.html";
+    });
