@@ -1,9 +1,11 @@
 $( document ).on( "pagecreate", "#map-page", function() {
+
     var $mapSwitch = $( "#map-switch" ),
         $listSwitch = $( "#list-switch" ),
         $map = $( "#map-canvas" ),
         $list = $( "#list-canvas" );
     $mapSwitch.on( "click", function( e ){
+    
         $map.show();
         $map.gmap();
         $list.hide();
