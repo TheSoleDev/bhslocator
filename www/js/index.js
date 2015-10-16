@@ -1,6 +1,7 @@
 $(document).on('pageshow', '#index', function (e, data) {
 
     setTimeout(function () {
+    	alert('vvvvvvv');
         // This is the minimum zoom level that we'll allow
         var minZoomLevel = 12;
 
