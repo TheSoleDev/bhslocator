@@ -1,16 +1,10 @@
 $(document).on('pageshow', '#index', function (e, data) {
 
-    setTimeout(function () {
-    	alert('vvvvvvv');
-        // This is the minimum zoom level that we'll allow
-        var minZoomLevel = 12;
 
-        var map = new google.maps.Map(document.getElementById('map_canvas'), {
-            zoom: minZoomLevel,
-            center: new google.maps.LatLng(38.50, -90.50),
-            mapTypeId: google.maps.MapTypeId.ROADMAP
-        });
-    }, 1);
+                // Also works with: var yourStartLatLng = '59.3426606750, 18.0736160278';
+                var yourStartLatLng = new google.maps.LatLng(59.3426606750, 18.0736160278);
+                $('#map_canvas').gmap({'center': yourStartLatLng});
+ 
 });
 
     $('#main').on('click','.btn-back',function(e) { 
