@@ -13,5 +13,6 @@ $(document).on('pageshow', '#index', function (e, data) {
 });
 
     $('#main').on('click','.btn-back',function(e) { 
+    	alert('ffffff');
       document.location.href="gmap.html";
     });
