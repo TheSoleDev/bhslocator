@@ -47,7 +47,13 @@
         <script type="text/javascript" src="js/jquery.ui.map.js"></script>
         <script type="text/javascript" src="js/jquery.ui.map.services.js"></script>
         <script type="text/javascript" src="js/jquery.ui.map.extensions.js"></script>
-        <script type="text/javascript" src="js/index.js"></script>
-
+        <script type="text/javascript">
+                    $('#map_canvas').gmap({'center': '57.7973333,12.0502107', 'zoom': 10, 'disableDefaultUI':true, 'callback': function() {
+                        var self = this;
+                        self.addMarker({'position': this.get('map').getCenter() }).click(function() {
+                            self.openInfoWindow({ 'content': 'Hello World!' }, this);
+                        }); 
+                    }});
+        </script> 
     </body>
 </html>
