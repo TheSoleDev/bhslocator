@@ -1,8 +1,11 @@
-#content {
-    padding: 0;
-    position : absolute !important;
-    top : 40px !important;
-    right : 0;
-    bottom : 40px !important;
-    left : 0 !important;
-}
+.segmented-control { text-align:center; }
+.segmented-control .ui-controlgroup { display:inline; margin:.2em 0px; }
+#map-page { width:100%; height:100%; }
+#map-canvas { width:100%; height:100%; margin-top:-30px; padding:0px!important; }
+#gmap-marker-link { color:#00a0df; text-decoration:none; }
+.ui-gmap-canvas { width:100%; height:100%; }
+.ui-gmap-infobox { display:none; }
+#show-more .ui-li-heading { text-align:center; }
+#show-more .ui-icon { visibility:hidden; }
+.ui-li-has-count .ui-li-count { border-color:transparent; }
+.wrap { white-space:normal; }
