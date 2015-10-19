@@ -1,4 +1,4 @@
-$(document).on('pageshow', '#index', function (e, data) {
+$(document).on('pageshow', '#gmap', function (e, data) {
 
 
                 // // Also works with: var yourStartLatLng = '59.3426606750, 18.0736160278';
