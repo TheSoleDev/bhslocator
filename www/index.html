@@ -26,7 +26,7 @@
             </h3>
 
             </div>
-            <p><a href="#gmap" >show Map</a></p>
+            <p><a href="#map-page" >show Map</a></p>
             <div data-theme="a" data-role="footer" data-position="fixed">
                  <h3>
                 First Page
@@ -36,7 +36,7 @@
         </div>
 
 
-        <div data-role="page" id="gmap">
+        <div data-role="page" id="map-page" data-url="map-page">
             <div data-theme="a" data-role="header">
                  <h3>
                 First Page
@@ -44,7 +44,8 @@
 
             </div>
             <div data-role="content" id="content">
-                <div id="map_canvas" style="height:350px; width:350px;border:1px solid #ff0000; background-color:#ffff00"></div>
+
+                <div role="main" class="ui-content" id="map-canvas" style="height:350px; width:350px;border:1px solid #ff0000; background-color:#ffff00"><!-- map loads here... --></div>                
             </div>
             <div data-theme="a" data-role="footer" data-position="fixed">
                  <h3>
