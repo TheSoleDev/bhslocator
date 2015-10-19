@@ -11,7 +11,7 @@ $(document).on('pageshow', '#index', function (e, data) {
                         self.addMarker({'position': this.get('map').getCenter() }).click(function() {
                             self.openInfoWindow({ 'content': 'Hello World!' }, this);
                         }); 
-                    }});                
+                    }}).triggerEvent('resize');;                
  
 });
 
